@@ -32,5 +32,10 @@
         public const int serviceNameMinLength = 1;
 
         public const int serviceDescriptionMaxLength = 500;
+
+        public const int detailingOrderStatusMaxLength = 20;
+        public const int detailingOrderStatusMinLength = 1;
+        public const int detailingOrderNotesMaxLength = 1000;
+
     }
 }
