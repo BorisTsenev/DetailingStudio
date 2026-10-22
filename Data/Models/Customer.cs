@@ -19,7 +19,7 @@ namespace DetailingStudio.Data.Models
         [Required]
         [Phone]
         [MaxLength(ValidationConstants.customerPhoneNumberMaxLength)]
-        public string? PhoneNumber { get; set; } = null!;
+        public string PhoneNumber { get; set; } = null!;
 
         [EmailAddress]
         [MaxLength(ValidationConstants.customerEmailMaxLength)]
@@ -27,5 +27,8 @@ namespace DetailingStudio.Data.Models
         
         [Required]
         public DateTime CreatedOn { get; set; } = DateTime.Now;
+
+        public ICollection<Vehicle> Vehicles { get; set; }
+       = new HashSet<Vehicle>();
     }
 }

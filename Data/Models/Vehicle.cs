@@ -25,7 +25,7 @@ namespace DetailingStudio.Data.Models
         [StringLength(ValidationConstants.vehicleVinNumberMaxLength, MinimumLength = ValidationConstants.vehicleVinNumberMinLength)]
         public string? VinNumber { get; set; }
 
-        public DateOnly? Year { get; set; }
+        public int? Year { get; set; }
 
         [StringLength(ValidationConstants.vehicleColorMaxLength, MinimumLength = ValidationConstants.vehicleColorMinLength)]
         public string? Color { get; set; }
@@ -40,7 +40,10 @@ namespace DetailingStudio.Data.Models
         public int VehicleCategoryId { get; set; }
 
         [ForeignKey(nameof(VehicleCategoryId))]
-        public VehicleCategory VehicleCategory { get; set; }    
+        public VehicleCategory VehicleCategory { get; set; }
+
+        public ICollection<DetailingOrder> DetailingOrders { get; set; }
+        = new HashSet<DetailingOrder>();
 
     }
 }

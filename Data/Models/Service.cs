@@ -17,7 +17,14 @@ namespace DetailingStudio.Data.Models
         public string? Description { get; set; }
 
         [Required]
-        [DefaultValue(true)]
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
+
+        public ICollection<ServicePrice> ServicePrices { get; set; }
+        = new HashSet<ServicePrice>();
+
+        public ICollection<DetailingOrderService> DetailingOrderServices { get; set; }
+            = new HashSet<DetailingOrderService>();
+
+
     }
 }

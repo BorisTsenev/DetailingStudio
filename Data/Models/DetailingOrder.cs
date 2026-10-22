@@ -29,7 +29,8 @@ namespace DetailingStudio.Data.Models
         [StringLength(ValidationConstants.detailingOrderNotesMaxLength)]
         public string? Notes { get; set; }
 
-        
+        public ICollection<DetailingOrderService> DetailingOrderServices { get; set; }
+        = new HashSet<DetailingOrderService>();
 
 
     }
