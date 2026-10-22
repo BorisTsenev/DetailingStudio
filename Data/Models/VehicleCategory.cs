@@ -10,6 +10,6 @@ namespace DetailingStudio.Data.Models
 
         [Required]
         [StringLength(ValidationConstants.vehicleCategoryNameMaxLength, MinimumLength = ValidationConstants.vehicleCategoryNameMinLength)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
     }
 }

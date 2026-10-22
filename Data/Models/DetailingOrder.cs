@@ -29,8 +29,7 @@ namespace DetailingStudio.Data.Models
         [StringLength(ValidationConstants.detailingOrderNotesMaxLength)]
         public string? Notes { get; set; }
 
-        [Required]
-        public decimal TotalPrice { get; set; }
+        
 
 
     }

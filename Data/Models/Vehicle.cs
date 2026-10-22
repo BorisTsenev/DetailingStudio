@@ -9,12 +9,15 @@ namespace DetailingStudio.Data.Models
         [Key]
         public int Id { get; set; }
 
+        [Required]
         [StringLength(ValidationConstants.vehicleMakeMaxLength)]
         public string Make { get; set; }
 
+        [Required]
         [StringLength(ValidationConstants.vehicleModelMaxLength)]
         public string Model { get; set; }
 
+        [Required]
         [StringLength(ValidationConstants.vehicleRegistrationNumberMaxLength, MinimumLength = ValidationConstants.vehicleRegistrationNumberMinLength)]
         public string RegistrationNumber { get; set; }
 
@@ -27,12 +30,17 @@ namespace DetailingStudio.Data.Models
         [StringLength(ValidationConstants.vehicleColorMaxLength, MinimumLength = ValidationConstants.vehicleColorMinLength)]
         public string? Color { get; set; }
 
+        [Required]
         public int CustomerId { get; set; }
 
         [ForeignKey(nameof(CustomerId))]
         public Customer Customer { get; set; }
 
-        public int? VehicleCategoryId { get; set; }
+        [Required]
+        public int VehicleCategoryId { get; set; }
+
+        [ForeignKey(nameof(VehicleCategoryId))]
+        public VehicleCategory VehicleCategory { get; set; }    
 
     }
 }
