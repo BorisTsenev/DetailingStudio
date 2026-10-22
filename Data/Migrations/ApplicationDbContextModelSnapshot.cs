@@ -99,9 +99,12 @@ namespace DetailingStudio.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.HasKey("DetailingOrderId", "ServiceId");
+
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("DetailingOrderServices");
                 });
@@ -119,7 +122,9 @@ namespace DetailingStudio.Data.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -140,7 +145,8 @@ namespace DetailingStudio.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
@@ -150,9 +156,10 @@ namespace DetailingStudio.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ServiceId");
-
                     b.HasIndex("VehicleCategoryId");
+
+                    b.HasIndex("ServiceId", "VehicleCategoryId")
+                        .IsUnique();
 
                     b.ToTable("ServicePrices");
                 });
@@ -194,8 +201,8 @@ namespace DetailingStudio.Data.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<DateOnly?>("Year")
-                        .HasColumnType("date");
+                    b.Property<int?>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -429,26 +436,45 @@ namespace DetailingStudio.Data.Migrations
             modelBuilder.Entity("DetailingStudio.Data.Models.DetailingOrder", b =>
                 {
                     b.HasOne("DetailingStudio.Data.Models.Vehicle", "Vehicle")
-                        .WithMany()
+                        .WithMany("DetailingOrders")
                         .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Vehicle");
                 });
 
-            modelBuilder.Entity("DetailingStudio.Data.Models.ServicePrice", b =>
+            modelBuilder.Entity("DetailingStudio.Data.Models.DetailingOrderService", b =>
                 {
-                    b.HasOne("DetailingStudio.Data.Models.Service", "Service")
-                        .WithMany()
-                        .HasForeignKey("ServiceId")
+                    b.HasOne("DetailingStudio.Data.Models.DetailingOrder", "DetailingOrder")
+                        .WithMany("DetailingOrderServices")
+                        .HasForeignKey("DetailingOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DetailingStudio.Data.Models.Service", "Service")
+                        .WithMany("DetailingOrderServices")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DetailingOrder");
+
+                    b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("DetailingStudio.Data.Models.ServicePrice", b =>
+                {
+                    b.HasOne("DetailingStudio.Data.Models.Service", "Service")
+                        .WithMany("ServicePrices")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("DetailingStudio.Data.Models.VehicleCategory", "VehicleCategory")
-                        .WithMany()
+                        .WithMany("ServicePrices")
                         .HasForeignKey("VehicleCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Service");
@@ -459,15 +485,15 @@ namespace DetailingStudio.Data.Migrations
             modelBuilder.Entity("DetailingStudio.Data.Models.Vehicle", b =>
                 {
                     b.HasOne("DetailingStudio.Data.Models.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Vehicles")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DetailingStudio.Data.Models.VehicleCategory", "VehicleCategory")
-                        .WithMany()
+                        .WithMany("Vehicles")
                         .HasForeignKey("VehicleCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Customer");
@@ -524,6 +550,35 @@ namespace DetailingStudio.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DetailingStudio.Data.Models.Customer", b =>
+                {
+                    b.Navigation("Vehicles");
+                });
+
+            modelBuilder.Entity("DetailingStudio.Data.Models.DetailingOrder", b =>
+                {
+                    b.Navigation("DetailingOrderServices");
+                });
+
+            modelBuilder.Entity("DetailingStudio.Data.Models.Service", b =>
+                {
+                    b.Navigation("DetailingOrderServices");
+
+                    b.Navigation("ServicePrices");
+                });
+
+            modelBuilder.Entity("DetailingStudio.Data.Models.Vehicle", b =>
+                {
+                    b.Navigation("DetailingOrders");
+                });
+
+            modelBuilder.Entity("DetailingStudio.Data.Models.VehicleCategory", b =>
+                {
+                    b.Navigation("ServicePrices");
+
+                    b.Navigation("Vehicles");
                 });
 #pragma warning restore 612, 618
         }
