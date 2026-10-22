@@ -1,7 +1,6 @@
 ﻿using DetailingStudio.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection.Emit;
 
 namespace DetailingStudio.Data
 {
@@ -13,6 +12,7 @@ namespace DetailingStudio.Data
         public DbSet<Service> Services { get; set; }
         public DbSet<DetailingOrder> DetailingOrders { get; set; }
         public DbSet<DetailingOrderService> DetailingOrderServices { get; set; }
+        public DbSet<ServicePrice> ServicePrices { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -20,6 +20,8 @@ namespace DetailingStudio.Data
 
             builder.ApplyConfigurationsFromAssembly(typeof(DetailingStudioDbContext).Assembly);
 
+            builder.Entity<DetailingOrderService>()
+                .HasKey(dos => new { dos.DetailingOrderId, dos.ServiceId });
 
         }
     }
