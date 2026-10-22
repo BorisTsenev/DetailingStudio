@@ -9,20 +9,20 @@ namespace DetailingStudio.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(ValidationConstants.customerFirstNameMaxLength, MinimumLength = ValidationConstants.customerFirstNameMinLength)]
+        [StringLength(ValidationConstants.CustomerFirstNameMaxLength, MinimumLength = ValidationConstants.CustomerFirstNameMinLength)]
         public string FirstName { get; set; } = null!;
 
         [Required]
-        [StringLength(ValidationConstants.customerLastNameMaxLength, MinimumLength = ValidationConstants.customerLastNameMinLength)]
+        [StringLength(ValidationConstants.CustomerLastNameMaxLength, MinimumLength = ValidationConstants.CustomerLastNameMinLength)]
         public string LastName { get; set; } = null!;
 
         [Required]
         [Phone]
-        [MaxLength(ValidationConstants.customerPhoneNumberMaxLength)]
+        [MaxLength(ValidationConstants.CustomerPhoneNumberMaxLength)]
         public string PhoneNumber { get; set; } = null!;
 
         [EmailAddress]
-        [MaxLength(ValidationConstants.customerEmailMaxLength)]
+        [MaxLength(ValidationConstants.CustomerEmailMaxLength)]
         public string? Email { get; set; }
         
         [Required]

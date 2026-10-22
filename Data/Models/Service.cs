@@ -10,10 +10,10 @@ namespace DetailingStudio.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(ValidationConstants.serviceNameMaxLength, MinimumLength = ValidationConstants.serviceNameMinLength)]
-        public string Name { get; set; }
+        [StringLength(ValidationConstants.ServiceNameMaxLength, MinimumLength = ValidationConstants.ServiceNameMinLength)]
+        public string Name { get; set; } = null!;
 
-        [MaxLength(ValidationConstants.serviceDescriptionMaxLength)]
+        [MaxLength(ValidationConstants.ServiceDescriptionMaxLength)]
         public string? Description { get; set; }
 
         [Required]

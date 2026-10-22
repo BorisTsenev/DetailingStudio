@@ -15,13 +15,13 @@ namespace DetailingStudio.Data.Models
         public int ServiceId { get; set; }
 
         [ForeignKey(nameof(ServiceId))]
-        public Service Service { get; set; }
+        public Service Service { get; set; } = null!;
 
         [Required]
         public int VehicleCategoryId { get; set; }
 
         [ForeignKey(nameof(VehicleCategoryId))]
-        public VehicleCategory VehicleCategory { get; set; }
+        public VehicleCategory VehicleCategory { get; set; } = null!;
 
         [Required]
         public decimal Price { get; set; }

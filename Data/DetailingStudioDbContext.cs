@@ -20,9 +20,7 @@ namespace DetailingStudio.Data
 
             builder.ApplyConfigurationsFromAssembly(typeof(DetailingStudioDbContext).Assembly);
 
-            builder.Entity<DetailingOrderService>()
-                .HasKey(dos => new { dos.DetailingOrderId, dos.ServiceId });
-
+           
         }
     }
     

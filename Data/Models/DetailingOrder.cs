@@ -14,19 +14,19 @@ namespace DetailingStudio.Data.Models
         public int VehicleId { get; set; }
 
         [ForeignKey(nameof(VehicleId))]
-        public Vehicle Vehicle { get; set; }
+        public Vehicle Vehicle { get; set; } = null!;
 
         [Required]
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 
         [Required]
-        public DateTime AppointmentDate { get; set; }
+        public DateTime AppointmentDate { get; set; } 
 
         [Required]
-        [StringLength(ValidationConstants.detailingOrderStatusMaxLength, MinimumLength = ValidationConstants.detailingOrderStatusMinLength)]
-        public string Status { get; set; } 
+        [StringLength(ValidationConstants.DetailingOrderStatusMaxLength, MinimumLength = ValidationConstants.DetailingOrderStatusMinLength)]
+        public string Status { get; set; } = null!;
 
-        [StringLength(ValidationConstants.detailingOrderNotesMaxLength)]
+        [StringLength(ValidationConstants.DetailingOrderNotesMaxLength)]
         public string? Notes { get; set; }
 
         public ICollection<DetailingOrderService> DetailingOrderServices { get; set; }

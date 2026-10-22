@@ -2,40 +2,40 @@
 {
     public class ValidationConstants
     {
-        public const int customerFirstNameMaxLength = 50;
-        public const int customerFirstNameMinLength = 1;
+        public const int CustomerFirstNameMaxLength = 50;
+        public const int CustomerFirstNameMinLength = 1;
 
-        public const int customerLastNameMaxLength = 50;
-        public const int customerLastNameMinLength = 1;
+        public const int CustomerLastNameMaxLength = 50;
+        public const int CustomerLastNameMinLength = 1;
 
-        public const int customerPhoneNumberMaxLength = 20;
+        public const int CustomerPhoneNumberMaxLength = 20;
 
-        public const int customerEmailMaxLength = 100;
+        public const int CustomerEmailMaxLength = 100;
 
-        public const int vehicleMakeMaxLength = 50;
+        public const int VehicleMakeMaxLength = 50;
 
-        public const int vehicleModelMaxLength = 50;
+        public const int VehicleModelMaxLength = 50;
 
-        public const int vehicleRegistrationNumberMaxLength = 15;
-        public const int vehicleRegistrationNumberMinLength = 1;
+        public const int VehicleRegistrationNumberMaxLength = 15;
+        public const int VehicleRegistrationNumberMinLength = 1;
 
-        public const int vehicleVinNumberMaxLength = 20;
-        public const int vehicleVinNumberMinLength = 5;
+        public const int VehicleVinNumberMaxLength = 20;
+        public const int VehicleVinNumberMinLength = 5;
 
-        public const int vehicleColorMaxLength = 30;
-        public const int vehicleColorMinLength = 1;
+        public const int VehicleColorMaxLength = 30;
+        public const int VehicleColorMinLength = 1;
 
-        public const int vehicleCategoryNameMaxLength = 50;
-        public const int vehicleCategoryNameMinLength = 1;
+        public const int VehicleCategoryNameMaxLength = 50;
+        public const int VehicleCategoryNameMinLength = 1;
 
-        public const int serviceNameMaxLength = 100;
-        public const int serviceNameMinLength = 1;
+        public const int ServiceNameMaxLength = 100;
+        public const int ServiceNameMinLength = 1;
 
-        public const int serviceDescriptionMaxLength = 500;
+        public const int ServiceDescriptionMaxLength = 500;
 
-        public const int detailingOrderStatusMaxLength = 20;
-        public const int detailingOrderStatusMinLength = 1;
-        public const int detailingOrderNotesMaxLength = 1000;
+        public const int DetailingOrderStatusMaxLength = 20;
+        public const int DetailingOrderStatusMinLength = 1;
+        public const int DetailingOrderNotesMaxLength = 1000;
 
     }
 }

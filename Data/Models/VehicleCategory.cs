@@ -9,7 +9,7 @@ namespace DetailingStudio.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(ValidationConstants.vehicleCategoryNameMaxLength, MinimumLength = ValidationConstants.vehicleCategoryNameMinLength)]
+        [StringLength(ValidationConstants.VehicleCategoryNameMaxLength, MinimumLength = ValidationConstants.VehicleCategoryNameMinLength)]
         public string Name { get; set; } = null!;
 
         public ICollection<Vehicle> Vehicles { get; set; }
