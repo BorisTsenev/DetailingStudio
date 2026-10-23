@@ -1,0 +1,21 @@
+﻿@model DetailingStudio.Data.Models.Customer
+
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+<h1>Customer Details</h1>
+
+<div>
+    <p><strong>First Name:</strong> @Model.FirstName</p>
+    <p><strong>Last Name:</strong> @Model.LastName</p>
+    <p><strong>Phone:</strong> @Model.PhoneNumber</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Created On:</strong> @Model.CreatedOn</p>
+</div>
+
+<a asp-controller="Customers"
+   asp-action="Index"
+   class="btn btn-secondary">
+    Back
+</a>

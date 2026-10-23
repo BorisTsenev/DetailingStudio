@@ -17,5 +17,17 @@ namespace DetailingStudio.Controllers
             List<Customer> customers = await context.Customers.ToListAsync();
             return View(customers);
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            Customer? customer = await context.Customers.FirstOrDefaultAsync(c => c.Id == id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return View(customer);
+        }
     }
 }
