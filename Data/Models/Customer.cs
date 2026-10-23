@@ -18,14 +18,13 @@ namespace DetailingStudio.Data.Models
 
         [Required]
         [Phone]
-        [MaxLength(ValidationConstants.CustomerPhoneNumberMaxLength)]
+        [StringLength(ValidationConstants.CustomerPhoneNumberMaxLength, MinimumLength = ValidationConstants.CustomerPhoneNumberMinLength)]
         public string PhoneNumber { get; set; } = null!;
 
         [EmailAddress]
         [MaxLength(ValidationConstants.CustomerEmailMaxLength)]
         public string? Email { get; set; }
         
-        [Required]
         public DateTime CreatedOn { get; set; } = DateTime.Now;
 
         public ICollection<Vehicle> Vehicles { get; set; }

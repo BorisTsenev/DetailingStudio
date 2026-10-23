@@ -29,5 +29,27 @@ namespace DetailingStudio.Controllers
 
             return View(customer);
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Customer customer)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(customer);
+            }
+
+            await context.Customers.AddAsync(customer);
+
+            await context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

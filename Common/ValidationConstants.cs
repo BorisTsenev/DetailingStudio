@@ -9,6 +9,7 @@
         public const int CustomerLastNameMinLength = 1;
 
         public const int CustomerPhoneNumberMaxLength = 20;
+        public const int CustomerPhoneNumberMinLength = 8;
 
         public const int CustomerEmailMaxLength = 100;
 
