@@ -51,5 +51,39 @@ namespace DetailingStudio.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            Customer? customer = await context.Customers
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return View(customer);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Customer customer)
+        {
+            if (id != customer.Id)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(customer);
+            }
+
+            context.Customers.Update(customer);
+            await context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
