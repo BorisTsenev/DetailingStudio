@@ -1,0 +1,33 @@
+﻿@model DetailingStudio.Data.Models.Vehicle
+
+@{
+    ViewData["Title"] = "Vehicle Details";
+}
+
+<h1>Vehicle Details</h1>
+
+<div>
+    <p><strong>Make:</strong> @Model.Make</p>
+    <p><strong>Model:</strong> @Model.Model</p>
+    <p><strong>Registration Number:</strong> @Model.RegistrationNumber</p>
+    <p><strong>VIN Number:</strong> @Model.VinNumber</p>
+    <p><strong>Year:</strong> @Model.Year</p>
+    <p><strong>Color:</strong> @Model.Color</p>
+    <p><strong>Vehicle Category:</strong> @Model.VehicleCategory.Name</p>
+    <p><strong>Owner:</strong> @Model.Customer.FirstName @Model.Customer.LastName @Model.Customer.PhoneNumber</p>
+</div>
+<a asp-action="Delete"
+   asp-route-id="@Model.Id"
+   class="btn btn-danger">
+    Delete
+</a>
+<a asp-action="Edit"
+   asp-route-id="@Model.Id"
+   class="btn btn-warning">
+    Edit
+</a>
+<a asp-controller="Vehicles"
+   asp-action="Index"
+   class="btn btn-secondary">
+    Back
+</a>
