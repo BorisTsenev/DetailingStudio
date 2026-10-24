@@ -1,0 +1,67 @@
+﻿@model IEnumerable<DetailingStudio.Data.Models.Vehicle>
+@using DetailingStudio.Data.Models
+
+@{
+    ViewData["Title"] = "Vehicles";
+}
+
+<h1>Vehicles</h1>
+
+<a asp-controller="Vehicles"
+   asp-action="Create"
+   class="btn btn-primary mb-3">
+    Add Vehicle
+</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Registration Number</th>
+            <th>Year</th>
+            <th>Owner</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (Vehicle vehicle in Model)
+        {
+            <tr>
+                <td>@vehicle.Make</td>
+                <td>@vehicle.Model</td>
+                <td>@vehicle.RegistrationNumber</td>
+                <td>@vehicle.Year</td>
+
+                <td>
+                    @vehicle.Customer.FirstName
+                    @vehicle.Customer.LastName
+                </td>
+
+                <td>@vehicle.VehicleCategory.Name</td>
+
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@vehicle.Id"
+                       class="btn btn-info">
+                        Details
+                    </a>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@vehicle.Id"
+                       class="btn btn-warning">
+                        Edit
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@vehicle.Id"
+                       class="btn btn-danger">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
