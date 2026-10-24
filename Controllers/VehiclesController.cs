@@ -25,20 +25,13 @@ namespace DetailingStudio.Controllers
             return View(vehicles);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Create()
         {
-            List<Customer> customers = await context.Customers.ToListAsync();
+            ViewBag.Customers = await context.Customers.ToListAsync();
 
-            ViewBag.Customers = customers
-                .Select(c => new SelectListItem
-                {
-                    Value = c.Id.ToString(),
-                    Text = $"{c.FirstName} {c.LastName} {c.PhoneNumber}"
-                })
-                .ToList();
-
-            ViewBag.VehicleCategories = new SelectList(await context.VehicleCategories
-                .ToListAsync(),
+            ViewBag.VehicleCategories = new SelectList(
+                await context.VehicleCategories.ToListAsync(),
                 "Id",
                 "Name");
 

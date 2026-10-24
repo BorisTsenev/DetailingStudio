@@ -1,4 +1,5 @@
-﻿@model DetailingStudio.Data.Models.Vehicle
+﻿@using DetailingStudio.Data.Models
+@model DetailingStudio.Data.Models.Vehicle
 
 @{
     ViewData["Title"] = "Add Vehicle";
@@ -44,13 +45,27 @@
         <span asp-validation-for="Color" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="CustomerId" class="form-label">Owner</label>
+        <label class="form-label">Owner</label>
 
-        <select asp-for="CustomerId"
-                asp-items="ViewBag.Customers"
-                class="form-select">
-            <option value="">-- Select Owner --</option>
-        </select>
+        <input type="text"
+               id="customerSearch"
+               list="customersList"
+               class="form-control"
+               placeholder="Search by name or phone..."
+               autocomplete="off" />
+
+        <datalist id="customersList">
+            @foreach (Customer customer in ViewBag.Customers)
+            {
+                <option value="@($"{customer.FirstName} {customer.LastName} - {customer.PhoneNumber}")"
+                        data-id="@customer.Id">
+                </option>
+            }
+        </datalist>
+
+        <input asp-for="CustomerId"
+               type="hidden"
+               id="customerId" />
 
         <span asp-validation-for="CustomerId"
               class="text-danger"></span>
@@ -87,4 +102,21 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        const customerSearch = document.getElementById("customerSearch");
+        const customerId = document.getElementById("customerId");
+        const customerOptions = document.querySelectorAll("#customersList option");
+
+        customerSearch.addEventListener("input", function () {
+            customerId.value = "";
+
+            customerOptions.forEach(option => {
+                if (option.value === customerSearch.value) {
+                    customerId.value = option.dataset.id;
+                }
+            });
+        });
+    </script>
+}
 }
