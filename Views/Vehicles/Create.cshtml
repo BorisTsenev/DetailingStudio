@@ -50,6 +50,7 @@
         <input type="text"
                id="customerSearch"
                list="customersList"
+               name="ownerInput"
                class="form-control"
                placeholder="Search by name or phone..."
                autocomplete="off" />
@@ -57,15 +58,15 @@
         <datalist id="customersList">
             @foreach (Customer customer in ViewBag.Customers)
             {
-                <option value="@($"{customer.FirstName} {customer.LastName} - {customer.PhoneNumber}")"
+                <option value="@($"{customer.FirstName} {customer.LastName} {customer.PhoneNumber}")"
                         data-id="@customer.Id">
                 </option>
             }
         </datalist>
 
-        <input asp-for="CustomerId"
-               type="hidden"
-               id="customerId" />
+        <input type="hidden"
+               id="selectedCustomerId"
+               name="selectedCustomerId" />
 
         <span asp-validation-for="CustomerId"
               class="text-danger"></span>
