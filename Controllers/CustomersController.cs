@@ -85,5 +85,35 @@ namespace DetailingStudio.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Customer? customer = await context.Customers
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return View(customer);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            Customer? customer = await context.Customers
+                .FirstOrDefaultAsync(c => c.Id == id);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            context.Customers.Remove(customer);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
