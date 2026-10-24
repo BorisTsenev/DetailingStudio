@@ -229,6 +229,33 @@ namespace DetailingStudio.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("VehicleCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Small"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Medium"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Large"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "SUV"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Van"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
