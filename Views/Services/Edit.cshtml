@@ -1,0 +1,95 @@
+﻿@model DetailingStudio.Models.ViewModels.ServiceCreateViewModel
+
+@{
+    ViewData["Title"] = "Edit Service";
+}
+
+<h1>Edit Service</h1>
+
+<form asp-action="Edit"
+      asp-route-id="@ViewBag.ServiceId"
+      method="post">
+
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+
+        <input asp-for="Name"
+               class="form-control" />
+
+        <span asp-validation-for="Name"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description"
+               class="form-label">
+        </label>
+
+        <textarea asp-for="Description"
+                  class="form-control"
+                  rows="3">
+        </textarea>
+
+        <span asp-validation-for="Description"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="form-check mb-4">
+        <input asp-for="IsActive"
+               class="form-check-input" />
+
+        <label asp-for="IsActive"
+               class="form-check-label">
+            Active
+        </label>
+    </div>
+
+    <h4>Prices by Vehicle Category</h4>
+
+    @for (int i = 0; i < Model.ServicePrices.Count; i++)
+    {
+        <div class="mb-3">
+
+            <input type="hidden"
+                   asp-for="ServicePrices[i].VehicleCategoryId" />
+
+            <input type="hidden"
+                   asp-for="ServicePrices[i].VehicleCategoryName" />
+
+            <label class="form-label">
+                @Model.ServicePrices[i].VehicleCategoryName
+            </label>
+
+            <input asp-for="ServicePrices[i].Price"
+                   class="form-control"
+                   type="number"
+                   step="0.01" />
+
+            <span asp-validation-for="ServicePrices[i].Price"
+                  class="text-danger">
+            </span>
+
+        </div>
+    }
+
+    <button type="submit"
+            class="btn btn-primary">
+        Save Changes
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
