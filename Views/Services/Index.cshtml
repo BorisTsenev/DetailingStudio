@@ -13,11 +13,42 @@
     Add Service
 </a>
 
+<form asp-action="Index"
+      method="get"
+      class="mb-3">
+
+    <div class="row">
+        <div class="col-md-4">
+
+            <label class="form-label">
+                Filter by vehicle category
+            </label>
+
+            <select name="categoryId"
+                    asp-items="ViewBag.Categories"
+                    class="form-select">
+
+                <option value="">All Categories</option>
+
+            </select>
+
+        </div>
+
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="submit"
+                    class="btn btn-primary">
+                Filter
+            </button>
+        </div>
+    </div>
+</form>
+
 <table class="table table-striped">
     <thead>
         <tr>
             <th>Name</th>
             <th>Description</th>
+            <th>Category</th>
             <th>Prices</th>
             <th>Status</th>
             <th>Actions</th>
@@ -31,6 +62,15 @@
                 <td>@service.Name</td>
 
                 <td>@service.Description</td>
+
+                <td>
+                    @foreach (ServicePrice price in service.ServicePrices)
+                    {
+                        <span class="badge bg-secondary">
+                            @price.VehicleCategory.Name
+                        </span>
+                    }
+                </td>
 
                 <td>
                     @foreach (ServicePrice price in service.ServicePrices)
