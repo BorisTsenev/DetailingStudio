@@ -95,7 +95,8 @@ namespace DetailingStudio.Controllers
             {
                 Name = viewModel.Name,
                 Description = viewModel.Description,
-                IsActive = viewModel.IsActive
+                IsActive = viewModel.IsActive,
+                ServiceType = viewModel.ServiceType
             };
 
             foreach (ServicePriceInputModel priceInput in viewModel.ServicePrices)
@@ -148,7 +149,8 @@ namespace DetailingStudio.Controllers
             {
                 Name = service.Name,
                 Description = service.Description,
-                IsActive = service.IsActive
+                IsActive = service.IsActive,
+                ServiceType = service.ServiceType
             };
 
             foreach (ServicePrice servicePrice in service.ServicePrices)

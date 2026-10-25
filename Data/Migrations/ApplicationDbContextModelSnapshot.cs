@@ -131,6 +131,9 @@ namespace DetailingStudio.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("ServiceType")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Services");

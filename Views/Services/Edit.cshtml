@@ -1,4 +1,5 @@
 ﻿@model DetailingStudio.Models.ViewModels.ServiceCreateViewModel
+@using DetailingStudio.Data.Models.Enums    
 
 @{
     ViewData["Title"] = "Edit Service";
@@ -36,6 +37,19 @@
         </textarea>
 
         <span asp-validation-for="Description"
+              class="text-danger">
+        </span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ServiceType" class="form-label"></label>
+
+        <select asp-for="ServiceType"
+                asp-items="Html.GetEnumSelectList<ServiceType>()"
+                class="form-select">
+        </select>
+
+        <span asp-validation-for="ServiceType"
               class="text-danger">
         </span>
     </div>

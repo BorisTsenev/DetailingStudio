@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DetailingStudio.Data.Models.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace DetailingStudio.Models.ViewModels
 {
@@ -8,6 +9,8 @@ namespace DetailingStudio.Models.ViewModels
         public string Name { get; set; } = null!;
 
         public string? Description { get; set; }
+
+        public ServiceType ServiceType { get; set; }
 
         public bool IsActive { get; set; } = true;
 
