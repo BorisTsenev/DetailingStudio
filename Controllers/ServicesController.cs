@@ -3,6 +3,7 @@ using DetailingStudio.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using DetailingStudio.Models.ViewModels;
 
 
 namespace DetailingStudio.Controllers
@@ -45,6 +46,24 @@ namespace DetailingStudio.Controllers
             return View(services);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Create()
+        {
+            List<VehicleCategory> categories = await context.VehicleCategories
+                .ToListAsync();
 
+            ServiceCreateViewModel viewModel = new ServiceCreateViewModel();
+
+            foreach (VehicleCategory category in categories)
+            {
+                viewModel.ServicePrices.Add(new ServicePriceInputModel
+                {
+                    VehicleCategoryId = category.Id,
+                    VehicleCategoryName = category.Name
+                });
+            }
+
+            return View(viewModel);
+        }
     }
 }
