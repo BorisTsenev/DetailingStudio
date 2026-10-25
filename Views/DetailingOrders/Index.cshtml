@@ -1,0 +1,75 @@
+﻿@model IEnumerable<DetailingStudio.Data.Models.DetailingOrder>
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<h1>Orders</h1>
+
+<a asp-controller="DetailingOrders"
+   asp-action="Create"
+   class="btn btn-primary mb-3">
+    Create Order
+</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Vehicle</th>
+            <th>Owner</th>
+            <th>Appointment</th>
+            <th>Status</th>
+            <th>Total</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var order in Model)
+        {
+            decimal totalPrice = order.DetailingOrderServices
+                .Sum(os => os.Price);
+
+            <tr>
+                <td>
+                    @order.Vehicle.Make @order.Vehicle.Model
+                    <br />
+                    <small class="text-muted">
+                        @order.Vehicle.RegistrationNumber
+                    </small>
+                </td>
+
+                <td>
+                    @order.Vehicle.Customer.FirstName
+                    @order.Vehicle.Customer.LastName
+                </td>
+
+                <td>
+                    @order.AppointmentDate.ToString("dd.MM.yyyy HH:mm")
+                </td>
+
+                <td>
+                    @order.Status
+                </td>
+
+                <td>
+                    <strong>@totalPrice.ToString("F2") €</strong>
+                </td>
+
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@order.Id"
+                       class="btn btn-info">
+                        Details
+                    </a>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@order.Id"
+                       class="btn btn-warning">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
