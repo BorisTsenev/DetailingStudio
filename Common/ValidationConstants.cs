@@ -38,5 +38,10 @@
         public const int DetailingOrderStatusMinLength = 1;
         public const int DetailingOrderNotesMaxLength = 1000;
 
+        public const int ExpenseDescriptionMaxLength = 100;
+        public const int ExpenseNotesMaxLength = 500;
+
+        public const int ExpenseCategoryNameMaxLength = 50;
+
     }
 }

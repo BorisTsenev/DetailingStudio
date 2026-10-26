@@ -109,6 +109,93 @@ namespace DetailingStudio.Data.Migrations
                     b.ToTable("DetailingOrderServices");
                 });
 
+            modelBuilder.Entity("DetailingStudio.Data.Models.Expense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("ExpenseCategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("ExpenseDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExpenseCategoryId");
+
+                    b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("DetailingStudio.Data.Models.ExpenseCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExpenseCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Consumables"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Rent"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Utilities"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Equipment"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Marketing"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Other"
+                        });
+                });
+
             modelBuilder.Entity("DetailingStudio.Data.Models.Service", b =>
                 {
                     b.Property<int>("Id")
@@ -493,6 +580,17 @@ namespace DetailingStudio.Data.Migrations
                     b.Navigation("Service");
                 });
 
+            modelBuilder.Entity("DetailingStudio.Data.Models.Expense", b =>
+                {
+                    b.HasOne("DetailingStudio.Data.Models.ExpenseCategory", "ExpenseCategory")
+                        .WithMany("Expenses")
+                        .HasForeignKey("ExpenseCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ExpenseCategory");
+                });
+
             modelBuilder.Entity("DetailingStudio.Data.Models.ServicePrice", b =>
                 {
                     b.HasOne("DetailingStudio.Data.Models.Service", "Service")
@@ -590,6 +688,11 @@ namespace DetailingStudio.Data.Migrations
             modelBuilder.Entity("DetailingStudio.Data.Models.DetailingOrder", b =>
                 {
                     b.Navigation("DetailingOrderServices");
+                });
+
+            modelBuilder.Entity("DetailingStudio.Data.Models.ExpenseCategory", b =>
+                {
+                    b.Navigation("Expenses");
                 });
 
             modelBuilder.Entity("DetailingStudio.Data.Models.Service", b =>

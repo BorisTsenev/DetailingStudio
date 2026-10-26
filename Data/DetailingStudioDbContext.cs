@@ -14,6 +14,9 @@ namespace DetailingStudio.Data
         public DbSet<DetailingOrderService> DetailingOrderServices { get; set; }
         public DbSet<ServicePrice> ServicePrices { get; set; }
 
+        public DbSet<Expense> Expenses { get; set; }
+        public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
