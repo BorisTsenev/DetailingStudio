@@ -223,7 +223,7 @@ namespace DetailingStudio.Controllers
             }
 
 
-            
+
             List<int> selectedServiceIds =
                 viewModel.SelectedServiceIds
                     .Distinct()
@@ -251,7 +251,7 @@ namespace DetailingStudio.Controllers
             }
 
 
-            
+
             DetailingOrder order = new DetailingOrder
             {
                 Vehicle = vehicle,
@@ -281,6 +281,81 @@ namespace DetailingStudio.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        public async Task<IActionResult> Details(int id)
+        {
+            DetailingOrder? order = await context.DetailingOrders
+                .Include(o => o.Vehicle)
+                .ThenInclude(v => v.Customer)
+                .Include(o => o.Vehicle)
+                .ThenInclude(v => v.VehicleCategory)
+                .Include(o => o.DetailingOrderServices)
+                .ThenInclude(dos => dos.Service)
+                .FirstOrDefaultAsync(o => o.Id == id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            return View(order);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            DetailingOrder? order = await context.DetailingOrders
+                .FirstOrDefaultAsync(o => o.Id == id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return View(order);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(
+                int id,
+                DateTime appointmentDate,
+                string status,
+                string? notes)
+        {
+            DetailingOrder? order = await context.DetailingOrders
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            if (appointmentDate == default)
+            {
+                ModelState.AddModelError(
+                    nameof(appointmentDate),
+                    "Appointment date is required.");
+            }
+
+            if (string.IsNullOrWhiteSpace(status))
+            {
+                ModelState.AddModelError(
+                    nameof(status),
+                    "Status is required.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(order);
+            }
+
+            order.AppointmentDate = appointmentDate;
+            order.Status = status;
+            order.Notes = notes;
+
+            await context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Details), new { id = order.Id });
+        }
     }
-    
+
 }

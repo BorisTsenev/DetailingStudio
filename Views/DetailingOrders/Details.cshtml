@@ -1,0 +1,132 @@
+﻿@using DetailingStudio.Data.Models
+@model DetailingStudio.Data.Models.DetailingOrder
+
+@{
+    ViewData["Title"] = "Order Details";
+
+    decimal totalPrice = Model.DetailingOrderServices
+        .Sum(os => os.Price);
+}
+
+<h1>Order Details</h1>
+
+<div class="mb-4">
+
+    <h4>Customer</h4>
+
+    <p>
+        <strong>Name:</strong>
+        @Model.Vehicle.Customer.FirstName
+        @Model.Vehicle.Customer.LastName
+    </p>
+
+    <p>
+        <strong>Phone:</strong>
+        @Model.Vehicle.Customer.PhoneNumber
+    </p>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Vehicle.Customer.Email))
+    {
+        <p>
+            <strong>Email:</strong>
+            @Model.Vehicle.Customer.Email
+        </p>
+    }
+
+    <hr />
+
+    <h4>Vehicle</h4>
+
+    <p>
+        <strong>Vehicle:</strong>
+        @Model.Vehicle.Make @Model.Vehicle.Model
+    </p>
+
+    <p>
+        <strong>Registration Number:</strong>
+        @Model.Vehicle.RegistrationNumber
+    </p>
+
+    <p>
+        <strong>Category:</strong>
+        @Model.Vehicle.VehicleCategory.Name
+    </p>
+
+    <hr />
+
+    <h4>Order</h4>
+
+    <p>
+        <strong>Created:</strong>
+        @Model.CreatedOn.ToString("dd.MM.yyyy HH:mm")
+    </p>
+
+    <p>
+        <strong>Appointment:</strong>
+        @Model.AppointmentDate.ToString("dd.MM.yyyy HH:mm")
+    </p>
+
+    <p>
+        <strong>Status:</strong>
+        @Model.Status
+    </p>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Notes))
+    {
+        <p>
+            <strong>Notes:</strong>
+            @Model.Notes
+        </p>
+    }
+
+    <hr />
+
+    <h4>Services</h4>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (DetailingOrderService orderService
+                in Model.DetailingOrderServices)
+            {
+                <tr>
+                    <td>@orderService.Service.Name</td>
+
+                    <td>
+                        @orderService.Price.ToString("F2") €
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <th>Total</th>
+
+                <th>
+                    @totalPrice.ToString("F2") €
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+
+<a asp-action="Index"
+   class="btn btn-secondary">
+    Back
+</a>
+
+<a asp-action="Edit"
+   asp-route-id="@Model.Id"
+   class="btn btn-warning">
+    Edit
+</a>
+
+
