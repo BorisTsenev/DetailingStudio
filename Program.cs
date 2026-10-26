@@ -43,8 +43,7 @@ namespace DetailingStudio
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
-                .WithStaticAssets();
+                pattern: "{controller=Dashboard}/{action=Index}/{id?}");
             app.MapRazorPages()
                .WithStaticAssets();
 

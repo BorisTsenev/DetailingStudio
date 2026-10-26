@@ -1,0 +1,251 @@
+﻿@using System.Text.Json
+@using DetailingStudio.Data.Models
+@model DetailingStudio.Models.ViewModels.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<h1 class="mb-4">Dashboard</h1>
+
+
+<div class="row mb-4">
+
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">
+                    Completed Orders
+                </h6>
+
+                <h2>
+                    @Model.OrdersThisMonth
+                </h2>
+
+                <small>This month</small>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">
+                    Services Performed
+                </h6>
+
+                <h2>
+                    @Model.ServicesThisMonth
+                </h2>
+
+                <small>This month</small>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">
+                    Revenue
+                </h6>
+
+                <h2>
+                    @Model.RevenueThisMonth.ToString("F2") €
+                </h2>
+
+                <small>This month</small>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h6 class="text-muted">
+                    Customers
+                </h6>
+
+                <h2>
+                    @Model.TotalCustomers
+                </h2>
+
+                <small>Total customers</small>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="row mb-4">
+
+    <div class="col-md-6">
+
+        <div class="card shadow-sm">
+
+            <div class="card-body">
+
+                <h4 class="card-title">
+                    Services This Month
+                </h4>
+
+                @if (Model.ServiceNames.Count > 0)
+                {
+                    <canvas id="servicesChart"></canvas>
+                }
+                else
+                {
+                    <p class="text-muted">
+                        No completed services this month.
+                    </p>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="card shadow-sm">
+
+    <div class="card-body">
+
+        <h4 class="card-title mb-3">
+            Recent Orders
+        </h4>
+
+        <table class="table">
+
+            <thead>
+                <tr>
+                    <th>Vehicle</th>
+                    <th>Customer</th>
+                    <th>Appointment</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (DetailingOrder order in Model.RecentOrders)
+                {
+                    decimal total =
+                        order.DetailingOrderServices
+                            .Sum(os => os.Price);
+
+                    <tr>
+
+                        <td>
+                            @order.Vehicle.Make
+                            @order.Vehicle.Model
+
+                            <br />
+
+                            <small class="text-muted">
+                                @order.Vehicle.RegistrationNumber
+                            </small>
+                        </td>
+
+                        <td>
+                            @order.Vehicle.Customer.FirstName
+                            @order.Vehicle.Customer.LastName
+                        </td>
+
+                        <td>
+                            @order.AppointmentDate
+                            .ToString("dd.MM.yyyy HH:mm")
+                        </td>
+
+                        <td>
+                            @order.Status
+                        </td>
+
+                        <td>
+                            @total.ToString("F2") €
+                        </td>
+
+                        <td>
+                            <a asp-controller="DetailingOrders"
+                               asp-action="Details"
+                               asp-route-id="@order.Id"
+                               class="btn btn-sm btn-info">
+                                Details
+                            </a>
+                        </td>
+
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    @if (Model.ServiceNames.Count > 0)
+    {
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script>
+
+            const serviceNames =
+                @Html.Raw(
+                JsonSerializer.Serialize(Model.ServiceNames)
+                );
+
+            const serviceCounts =
+                @Html.Raw(
+                JsonSerializer.Serialize(Model.ServiceCounts)
+                );
+
+
+            const ctx =
+                document.getElementById("servicesChart");
+
+
+            new Chart(ctx, {
+
+                type: "pie",
+
+                data: {
+
+                    labels: serviceNames,
+
+                    datasets: [
+                        {
+                            data: serviceCounts
+                        }
+                    ]
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    plugins: {
+
+                        legend: {
+                            position: "bottom"
+                        }
+                    }
+                }
+
+            });
+
+        </script>
+    }
+}
