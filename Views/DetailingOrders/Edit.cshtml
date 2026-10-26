@@ -4,9 +4,9 @@
     ViewData["Title"] = "Edit Order";
 }
 
-<h1>Edit Order</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio management / Orders</p><h1>Edit Order</h1><p class="page-description">Appointments, services and the details behind every order.</p></div></div>
 
-<form asp-action="Edit"
+<form class="studio-form" asp-action="Edit"
       asp-route-id="@Model.Id"
       method="post">
 

@@ -5,8 +5,9 @@
     ViewData["Title"] = "Service Details";
 }
 
-<h1>Service Details</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio management / Services</p><h1>Service Details</h1><p class="page-description">Your service catalogue and vehicle-category pricing.</p></div></div>
 
+<section class="record-panel">
 <div class="mb-4">
 
     <p>
@@ -26,7 +27,7 @@
 
     <h4>Prices by Vehicle Category</h4>
 
-    <table class="table table-bordered">
+    <div class="table-responsive table-panel"><table class="table table-bordered">
         <thead>
             <tr>
                 <th>Category</th>
@@ -50,10 +51,11 @@
                 </tr>
             }
         </tbody>
-    </table>
+    </table></div>
 
 </div>
 
+</section>
 <a asp-controller="Services"
    asp-action="Index"
    class="btn btn-secondary">

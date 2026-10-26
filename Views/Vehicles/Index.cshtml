@@ -5,7 +5,7 @@
     ViewData["Title"] = "Vehicles";
 }
 
-<h1>Vehicles</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio management / Vehicles</p><h1>Vehicles</h1><p class="page-description">Vehicle records, registration and ownership.</p></div></div>
 
 <a asp-controller="Vehicles"
    asp-action="Create"
@@ -13,7 +13,7 @@
     Add Vehicle
 </a>
 
-<table class="table table-striped">
+<div class="table-responsive table-panel"><table class="table table-striped">
     <thead>
         <tr>
             <th>Make</th>
@@ -32,7 +32,7 @@
             <tr>
                 <td>@vehicle.Make</td>
                 <td>@vehicle.Model</td>
-                <td>@vehicle.RegistrationNumber</td>
+                <td><span class="registration">@vehicle.RegistrationNumber</span></td>
                 <td>@vehicle.Year</td>
 
                 <td>
@@ -40,7 +40,7 @@
                     @vehicle.Customer.LastName
                 </td>
 
-                <td>@vehicle.VehicleCategory.Name</td>
+                <td><span class="badge bg-secondary">@vehicle.VehicleCategory.Name</span></td>
 
                 <td>
                     <a asp-action="Details"
@@ -64,4 +64,4 @@
             </tr>
         }
     </tbody>
-</table>
+</table></div>

@@ -7,9 +7,9 @@
     List<ExpenseCategory> categories = ViewBag.ExpenseCategories;
 }
 
-<h1>Add Expense</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio management / Expenses</p><h1>Add Expense</h1><p class="page-description">Keep your studio spending clear and organised.</p></div></div>
 
-<form asp-action="Create" method="post">
+<form class="studio-form" asp-action="Create" method="post">
 
     <div asp-validation-summary="ModelOnly"
          class="text-danger mb-3">

@@ -4,8 +4,9 @@
     ViewData["Title"] = "Vehicle Details";
 }
 
-<h1>Vehicle Details</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio management / Vehicles</p><h1>Vehicle Details</h1><p class="page-description">Vehicle records, registration and ownership.</p></div></div>
 
+<section class="record-panel">
 <div>
     <p><strong>Make:</strong> @Model.Make</p>
     <p><strong>Model:</strong> @Model.Model</p>
@@ -16,6 +17,7 @@
     <p><strong>Vehicle Category:</strong> @Model.VehicleCategory.Name</p>
     <p><strong>Owner:</strong> @Model.Customer.FirstName @Model.Customer.LastName @Model.Customer.PhoneNumber</p>
 </div>
+</section>
 <a asp-action="Delete"
    asp-route-id="@Model.Id"
    class="btn btn-danger">

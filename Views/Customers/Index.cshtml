@@ -5,10 +5,10 @@
     ViewData["Title"] = "Customers";
 }
 
-<h1>Customers</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio management / Customers</p><h1>Customers</h1><p class="page-description">Customer relationships and contact information.</p></div></div>
 <a asp-controller="Customers" asp-action="Create" class="btn btn-primary">Add Customer</a>
 
-<table class="table table-striped">
+<div class="table-responsive table-panel"><table class="table table-striped">
     <thead>
         <tr>
             <th>First Name</th>
@@ -50,4 +50,4 @@
             </tr>
         }
     </tbody>
-</table>
+</table></div>

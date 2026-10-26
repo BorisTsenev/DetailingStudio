@@ -8,8 +8,9 @@
         .Sum(os => os.Price);
 }
 
-<h1>Order Details</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio management / Orders</p><h1>Order Details</h1><p class="page-description">Appointments, services and the details behind every order.</p></div></div>
 
+<section class="record-panel">
 <div class="mb-4">
 
     <h4>Customer</h4>
@@ -68,7 +69,7 @@
 
     <p>
         <strong>Status:</strong>
-        @Model.Status
+        <span class="status-badge" data-status="@Model.Status">@Model.Status</span>
     </p>
 
     @if (!string.IsNullOrWhiteSpace(Model.Notes))
@@ -83,7 +84,7 @@
 
     <h4>Services</h4>
 
-    <table class="table table-bordered">
+    <div class="table-responsive table-panel"><table class="table table-bordered">
         <thead>
             <tr>
                 <th>Service</th>
@@ -114,10 +115,11 @@
                 </th>
             </tr>
         </tfoot>
-    </table>
+    </table></div>
 
 </div>
 
+</section>
 <a asp-action="Index"
    class="btn btn-secondary">
     Back

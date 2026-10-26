@@ -3,12 +3,13 @@
 
 
 @{
-    ViewData["Title"] = "Delete Vehicle";
+    ViewData["Title"] = "Delete Service";
 }
 
-<h1>Delete Vehicle</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio management / Services</p><h1>Delete Service</h1><p class="page-description">Your service catalogue and vehicle-category pricing.</p></div></div>
 
-<p>Are you sure you want to delete this vehicle?</p>
+<section class="record-panel">
+<div class="alert alert-danger" role="alert"><strong>Confirm deletion</strong><p class="mb-0">Are you sure you want to delete this service?</p></div>
 
 <div class="mb-4">
 
@@ -29,7 +30,7 @@
 
     <h4>Prices by Vehicle Category</h4>
 
-    <table class="table table-bordered">
+    <div class="table-responsive table-panel"><table class="table table-bordered">
         <thead>
             <tr>
                 <th>Category</th>
@@ -53,11 +54,12 @@
                 </tr>
             }
         </tbody>
-    </table>
+    </table></div>
 
 </div>
 
-<form asp-action="Delete" method="post">
+</section>
+<form class="studio-form" asp-action="Delete" method="post">
     <input type="hidden" asp-for="Id" />
 
     <button type="submit" class="btn btn-danger">

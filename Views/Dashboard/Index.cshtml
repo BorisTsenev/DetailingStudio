@@ -6,12 +6,12 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<h1 class="mb-4">Dashboard</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio overview</p><h1>Dashboard</h1><p class="page-description">Your studio&#8217;s performance, at a glance.</p></div><a asp-controller="DetailingOrders" asp-action="Create" class="btn btn-primary">+ Create Order</a></div>
 
 
-<div class="row mb-4">
+<div class="row g-3 mb-4 kpi-grid">
 
-    <div class="col-md-3">
+    <div class="col-6 col-xl-2">
         <div class="card shadow-sm">
             <div class="card-body">
                 <h6 class="text-muted">
@@ -28,7 +28,7 @@
     </div>
 
 
-    <div class="col-md-3">
+    <div class="col-6 col-xl-2">
         <div class="card shadow-sm">
             <div class="card-body">
                 <h6 class="text-muted">
@@ -45,7 +45,7 @@
     </div>
 
 
-    <div class="col-md-3">
+    <div class="col-6 col-xl-2">
         <div class="card shadow-sm">
             <div class="card-body">
                 <h6 class="text-muted">
@@ -62,7 +62,7 @@
     </div>
 
 
-    <div class="col-md-3">
+    <div class="col-6 col-xl-2">
         <div class="card shadow-sm">
             <div class="card-body">
                 <h6 class="text-muted">
@@ -78,12 +78,25 @@
         </div>
     </div>
 
+    <div class="col-6 col-xl-2">
+        <div class="card shadow-sm"><div class="card-body">
+            <h6 class="text-muted">Expenses</h6>
+            <h2>@Model.ExpensesThisMonth.ToString("F2") &#8364;</h2>
+            <small>This month</small>
+        </div></div>
+    </div>
+    <div class="col-6 col-xl-2">
+        <div class="card shadow-sm"><div class="card-body">
+            <h6 class="text-muted">Profit</h6>
+            <h2>@Model.ProfitThisMonth.ToString("F2") &#8364;</h2>
+            <small>This month</small>
+        </div></div>
+    </div>
 </div>
 
+<div class="row g-4 mb-4 dashboard-charts">
 
-<div class="row mb-4">
-
-    <div class="col-md-6">
+    <div class="col-lg-4">
 
         <div class="card shadow-sm">
 
@@ -95,7 +108,7 @@
 
                 @if (Model.ServiceNames.Count > 0)
                 {
-                    <canvas id="servicesChart"></canvas>
+                    <div class="chart-frame"><canvas id="servicesChart"></canvas></div>
                 }
                 else
                 {
@@ -110,9 +123,7 @@
 
     </div>
 
-</div>
-
-
+<div class="col-lg-8">
 <div class="card shadow-sm mb-4">
     <div class="card-body">
 
@@ -124,11 +135,12 @@
             Daily activity for the current month
         </p>
 
-        <canvas id="financeChart"></canvas>
+        <div class="chart-frame"><canvas id="financeChart"></canvas></div>
 
     </div>
 </div>
 
+</div></div>
 
 <div class="card shadow-sm">
 
@@ -138,7 +150,7 @@
             Recent Orders
         </h4>
 
-        <table class="table">
+        <div class="table-responsive"><table class="table">
 
             <thead>
                 <tr>
@@ -183,7 +195,7 @@
                         </td>
 
                         <td>
-                            @order.Status
+                            <span class="status-badge" data-status="@order.Status">@order.Status</span>
                         </td>
 
                         <td>
@@ -204,7 +216,7 @@
 
             </tbody>
 
-        </table>
+        </table></div>
 
     </div>
 
@@ -216,6 +228,7 @@
 @section Scripts {
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="~/js/chart-theme.js" asp-append-version="true"></script>
 
     @if (Model.ServiceNames.Count > 0)
     {
@@ -248,6 +261,7 @@
 
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
 
                     plugins: {
                         legend: {
@@ -306,6 +320,7 @@
             options: {
 
                 responsive: true,
+                    maintainAspectRatio: false,
 
                 interaction: {
                     mode: "index",

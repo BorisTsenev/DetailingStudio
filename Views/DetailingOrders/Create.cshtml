@@ -11,9 +11,9 @@
     List<Customer> customers = ViewBag.Customers;
 }
 
-<h1>Create Order</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio management / Orders</p><h1>Create Order</h1><p class="page-description">Appointments, services and the details behind every order.</p></div></div>
 
-<form asp-action="Create" method="post">
+<form class="studio-form order-form" asp-action="Create" method="post">
 
     <div asp-validation-summary="ModelOnly"
          class="text-danger mb-3">
@@ -21,7 +21,7 @@
 
     <hr />
 
-    <h4>Vehicle</h4>
+    <h4 class="section-title"><span class="step-number">1</span>Vehicle selection</h4>
 
     <div class="mb-3">
         <div class="form-check">
@@ -104,7 +104,7 @@
 
         <hr />
 
-        <h4>Customer</h4>
+        <h4 class="section-title"><span class="step-number">2</span>Customer</h4>
 
         <div class="mb-3">
             <div class="form-check">
@@ -225,7 +225,7 @@
 
         <hr />
 
-        <h4>New Vehicle</h4>
+        <h4 class="section-title"><span class="step-number">3</span>Vehicle details</h4>
 
         <div class="row">
 
@@ -347,7 +347,7 @@
 
     <!-- SERVICES -->
 
-    <h4>Main Services</h4>
+    <h4 class="section-title"><span class="step-number">4</span>Main services</h4>
 
     <div class="mb-4">
 
@@ -388,7 +388,7 @@
     </div>
 
 
-    <h4>Additional Services</h4>
+    <h4 class="section-title">Additional services <small class="text-muted">Optional extras</small></h4>
 
     <div class="mb-4">
 
@@ -429,8 +429,8 @@
     </div>
 
 
-    <div class="mb-3">
-        <strong>Total:</strong>
+    <div class="order-total" aria-live="polite" aria-atomic="true">
+        <strong>Order total</strong>
         <span id="totalPrice">0.00 €</span>
     </div>
 
@@ -439,7 +439,7 @@
 
     <!-- ORDER -->
 
-    <h4>Order Details</h4>
+    <h4 class="section-title"><span class="step-number">5</span>Appointment &amp; notes</h4>
 
     <div class="mb-3">
         <label asp-for="AppointmentDate"

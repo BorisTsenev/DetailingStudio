@@ -7,7 +7,7 @@
     decimal totalExpenses = Model.Sum(e => e.Amount);
 }
 
-<h1>Expenses</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio management / Expenses</p><h1>Expenses</h1><p class="page-description">Keep your studio spending clear and organised.</p></div></div>
 
 <div class="mb-3">
     <a asp-controller="Expenses"
@@ -24,7 +24,7 @@
     </h4>
 </div>
 
-<table class="table table-striped">
+<div class="table-responsive table-panel"><table class="table table-striped">
     <thead>
         <tr>
             <th>Date</th>
@@ -84,4 +84,4 @@
             </tr>
         }
     </tbody>
-</table>
+</table></div>

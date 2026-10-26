@@ -4,9 +4,9 @@
     ViewData["Title"] = "Create Customer";
 }
 
-<h1>Create Customer</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio management / Customers</p><h1>Create Customer</h1><p class="page-description">Customer relationships and contact information.</p></div></div>
 
-<form asp-controller="Customers" asp-action="Create" method="post">
+<form class="studio-form" asp-controller="Customers" asp-action="Create" method="post">
     <div class="mb-3">
         <label asp-for="FirstName" class="form-label"></label>
         <input asp-for="FirstName" class="form-control" />

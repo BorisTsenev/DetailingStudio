@@ -4,9 +4,10 @@
     ViewData["Title"] = "Delete Customer";
 }
 
-<h1>Delete Customer</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio management / Customers</p><h1>Delete Customer</h1><p class="page-description">Customer relationships and contact information.</p></div></div>
 
-<p>Are you sure you want to delete this customer?</p>
+<section class="record-panel">
+<div class="alert alert-danger" role="alert"><strong>Confirm deletion</strong><p class="mb-0">Are you sure you want to delete this customer?</p></div>
 
 <div class="mb-3">
     <p><strong>First Name:</strong> @Model.FirstName</p>
@@ -15,7 +16,8 @@
     <p><strong>Email:</strong> @Model.Email</p>
 </div>
 
-<form asp-action="Delete" method="post">
+</section>
+<form class="studio-form" asp-action="Delete" method="post">
     <input type="hidden" asp-for="Id" />
 
     <button type="submit" class="btn btn-danger">

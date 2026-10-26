@@ -4,8 +4,9 @@
     ViewData["Title"] = "Delete Expense";
 }
 
-<h1>Delete Expense</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio management / Expenses</p><h1>Delete Expense</h1><p class="page-description">Keep your studio spending clear and organised.</p></div></div>
 
+<section class="record-panel">
 <div class="alert alert-warning">
     Are you sure you want to delete this expense?
 </div>
@@ -34,7 +35,8 @@
 
 </div>
 
-<form asp-action="Delete"
+</section>
+<form class="studio-form" asp-action="Delete"
       method="post">
 
     <input type="hidden"

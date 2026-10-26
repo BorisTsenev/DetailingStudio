@@ -4,8 +4,9 @@
     ViewData["Title"] = "Customer Details";
 }
 
-<h1>Customer Details</h1>
+<div class="page-heading"><div><p class="eyebrow">Studio management / Customers</p><h1>Customer Details</h1><p class="page-description">Customer relationships and contact information.</p></div></div>
 
+<section class="record-panel">
 <div>
     <p><strong>First Name:</strong> @Model.FirstName</p>
     <p><strong>Last Name:</strong> @Model.LastName</p>
@@ -14,6 +15,7 @@
     <p><strong>Created On:</strong> @Model.CreatedOn</p>
 </div>
 
+</section>
 <a asp-controller="Customers"
    asp-action="Index"
    class="btn btn-secondary">
