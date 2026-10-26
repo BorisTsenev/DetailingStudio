@@ -1,0 +1,761 @@
+﻿@using DetailingStudio.Data.Models
+@using DetailingStudio.Data.Models.Enums
+@model DetailingStudio.Models.ViewModels.DetailingOrderCreateViewModel
+
+@{
+    ViewData["Title"] = "Create Order";
+
+    List<Vehicle> vehicles = ViewBag.Vehicles;
+    List<VehicleCategory> categories = ViewBag.VehicleCategories;
+    List<Service> services = ViewBag.Services;
+    List<Customer> customers = ViewBag.Customers;
+}
+
+<h1>Create Order</h1>
+
+<form asp-action="Create" method="post">
+
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger mb-3">
+    </div>
+
+    <hr />
+
+    <h4>Vehicle</h4>
+
+    <div class="mb-3">
+        <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   name="vehicleMode"
+                   id="existingVehicleMode"
+                   value="existing"
+                   checked />
+
+            <label class="form-check-label"
+                   for="existingVehicleMode">
+                Existing Vehicle
+            </label>
+        </div>
+
+        <div class="form-check">
+            <input class="form-check-input"
+                   type="radio"
+                   name="vehicleMode"
+                   id="newVehicleMode"
+                   value="new" />
+
+            <label class="form-check-label"
+                   for="newVehicleMode">
+                New Vehicle
+            </label>
+        </div>
+    </div>
+
+
+
+    <div id="existingVehicleSection">
+
+        <div class="mb-3">
+            <label class="form-label">
+                Search Vehicle or Customer
+            </label>
+
+            <input type="text"
+                   id="vehicleSearch"
+                   class="form-control"
+                   placeholder="Search by vehicle, registration, customer or phone..." />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ExistingVehicleId"
+                   class="form-label">
+                Select Vehicle
+            </label>
+
+            <select asp-for="ExistingVehicleId"
+                    id="existingVehicleSelect"
+                    class="form-select">
+
+                <option value="">-- Select Vehicle --</option>
+
+                @foreach (Vehicle vehicle in vehicles)
+                {
+                    <option value="@vehicle.Id"
+                            data-category-id="@vehicle.VehicleCategoryId"
+                            data-search="@($"{vehicle.Make} {vehicle.Model} {vehicle.RegistrationNumber} {vehicle.Customer.FirstName} {vehicle.Customer.LastName} {vehicle.Customer.PhoneNumber}".ToLower())">
+
+                        @vehicle.Make @vehicle.Model -
+                        @vehicle.RegistrationNumber -
+                        @vehicle.Customer.FirstName @vehicle.Customer.LastName -
+                        @vehicle.Customer.PhoneNumber
+
+                    </option>
+                }
+
+            </select>
+        </div>
+
+    </div>
+
+
+    <div id="newVehicleSection"
+         style="display: none;">
+
+        <hr />
+
+        <h4>Customer</h4>
+
+        <div class="mb-3">
+            <div class="form-check">
+                <input class="form-check-input"
+                       type="radio"
+                       name="customerMode"
+                       id="existingCustomerMode"
+                       value="existing"
+                       checked />
+
+                <label class="form-check-label"
+                       for="existingCustomerMode">
+                    Existing Customer
+                </label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input"
+                       type="radio"
+                       name="customerMode"
+                       id="newCustomerMode"
+                       value="new" />
+
+                <label class="form-check-label"
+                       for="newCustomerMode">
+                    New Customer
+                </label>
+            </div>
+        </div>
+
+        <div id="existingCustomerSection">
+
+            <div class="mb-3">
+                <label class="form-label">Search Customer</label>
+
+                <input type="text"
+                       id="customerSearch"
+                       class="form-control"
+                       placeholder="Search by name or phone..." />
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ExistingCustomerId"
+                       class="form-label">
+                    Select Customer
+                </label>
+
+                <select asp-for="ExistingCustomerId"
+                        id="existingCustomerSelect"
+                        class="form-select">
+
+                    <option value="">-- Select Customer --</option>
+
+                    @foreach (Customer customer in customers)
+                    {
+                        <option value="@customer.Id"
+                                data-search="@($"{customer.FirstName} {customer.LastName} {customer.PhoneNumber}".ToLower())">
+
+                            @customer.FirstName @customer.LastName -
+                            @customer.PhoneNumber
+
+                        </option>
+                    }
+
+                </select>
+            </div>
+
+        </div>
+
+        <div id="newCustomerSection"
+             style="display: none;">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="FirstName" class="form-label">
+                        First Name
+                    </label>
+
+                    <input asp-for="FirstName"
+                           class="form-control" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="LastName" class="form-label">
+                        Last Name
+                    </label>
+
+                    <input asp-for="LastName"
+                           class="form-control" />
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PhoneNumber" class="form-label">
+                        Phone Number
+                    </label>
+
+                    <input asp-for="PhoneNumber"
+                           class="form-control" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Email" class="form-label">
+                        Email
+                    </label>
+
+                    <input asp-for="Email"
+                           class="form-control" />
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr />
+
+        <h4>New Vehicle</h4>
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label asp-for="Make"
+                       class="form-label">
+                    Make
+                </label>
+
+                <input asp-for="Make"
+                       class="form-control" />
+
+                <span asp-validation-for="Make"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label asp-for="Model"
+                       class="form-label">
+                    Model
+                </label>
+
+                <input asp-for="Model"
+                       class="form-control" />
+
+                <span asp-validation-for="Model"
+                      class="text-danger">
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label asp-for="RegistrationNumber"
+                       class="form-label">
+                    Registration Number
+                </label>
+
+                <input asp-for="RegistrationNumber"
+                       class="form-control" />
+
+                <span asp-validation-for="RegistrationNumber"
+                      class="text-danger">
+                </span>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label asp-for="VinNumber"
+                       class="form-label">
+                    VIN Number
+                </label>
+
+                <input asp-for="VinNumber"
+                       class="form-control" />
+
+                <span asp-validation-for="VinNumber"
+                      class="text-danger">
+                </span>
+            </div>
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <label asp-for="Year"
+                       class="form-label">
+                    Year
+                </label>
+
+                <input asp-for="Year"
+                       class="form-control"
+                       type="number" />
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label asp-for="Color"
+                       class="form-label">
+                    Color
+                </label>
+
+                <input asp-for="Color"
+                       class="form-control" />
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label asp-for="VehicleCategoryId"
+                       class="form-label">
+                    Vehicle Category
+                </label>
+
+                <select asp-for="VehicleCategoryId"
+                        id="newVehicleCategory"
+                        class="form-select">
+
+                    <option value="">-- Select Category --</option>
+
+                    @foreach (VehicleCategory category in categories)
+                    {
+                        <option value="@category.Id">
+                            @category.Name
+                        </option>
+                    }
+
+                </select>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <hr />
+
+    <!-- SERVICES -->
+
+    <h4>Main Services</h4>
+
+    <div class="mb-4">
+
+        @foreach (Service service in services.Where(s => s.ServiceType == ServiceType.Main))
+        {
+            <div class="form-check mb-2">
+
+                <input class="form-check-input service-checkbox"
+                       type="checkbox"
+                       name="SelectedServiceIds"
+                       value="@service.Id"
+                       id="service-@service.Id" />
+
+                <label class="form-check-label"
+                       for="service-@service.Id">
+
+                    <strong>@service.Name</strong>
+
+                    <span class="service-price text-muted"
+                          data-service-id="@service.Id">
+                    </span>
+
+                </label>
+
+                @foreach (ServicePrice price in service.ServicePrices)
+                {
+                    <span class="price-data"
+                          data-service-id="@service.Id"
+                          data-category-id="@price.VehicleCategoryId"
+                          data-price="@price.Price.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                          style="display:none;">
+                    </span>
+                }
+
+            </div>
+        }
+
+    </div>
+
+
+    <h4>Additional Services</h4>
+
+    <div class="mb-4">
+
+        @foreach (Service service in services.Where(s => s.ServiceType == ServiceType.Additional))
+        {
+            <div class="form-check mb-2">
+
+                <input class="form-check-input service-checkbox"
+                       type="checkbox"
+                       name="SelectedServiceIds"
+                       value="@service.Id"
+                       id="service-@service.Id" />
+
+                <label class="form-check-label"
+                       for="service-@service.Id">
+
+                    <strong>@service.Name</strong>
+
+                    <span class="service-price text-muted"
+                          data-service-id="@service.Id">
+                    </span>
+
+                </label>
+
+                @foreach (ServicePrice price in service.ServicePrices)
+                {
+                    <span class="price-data"
+                          data-service-id="@service.Id"
+                          data-category-id="@price.VehicleCategoryId"
+                          data-price="@price.Price.ToString(System.Globalization.CultureInfo.InvariantCulture)"
+                          style="display:none;">
+                    </span>
+                }
+
+            </div>
+        }
+
+    </div>
+
+
+    <div class="mb-3">
+        <strong>Total:</strong>
+        <span id="totalPrice">0.00 €</span>
+    </div>
+
+
+    <hr />
+
+    <!-- ORDER -->
+
+    <h4>Order Details</h4>
+
+    <div class="mb-3">
+        <label asp-for="AppointmentDate"
+               class="form-label">
+            Appointment
+        </label>
+
+        <input asp-for="AppointmentDate"
+               class="form-control"
+               type="datetime-local" />
+
+        <span asp-validation-for="AppointmentDate"
+              class="text-danger">
+        </span>
+    </div>
+
+
+    <div class="mb-3">
+        <label asp-for="Notes"
+               class="form-label">
+            Notes
+        </label>
+
+        <textarea asp-for="Notes"
+                  class="form-control"
+                  rows="3">
+        </textarea>
+    </div>
+
+
+    <button type="submit"
+            class="btn btn-primary">
+        Create Order
+    </button>
+
+    <a asp-action="Index"
+       class="btn btn-secondary">
+        Cancel
+    </a>
+
+</form>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        const existingVehicleMode =
+            document.getElementById("existingVehicleMode");
+
+        const newVehicleMode =
+            document.getElementById("newVehicleMode");
+
+        const existingVehicleSection =
+            document.getElementById("existingVehicleSection");
+
+        const newVehicleSection =
+            document.getElementById("newVehicleSection");
+
+        const existingVehicleSelect =
+            document.getElementById("existingVehicleSelect");
+
+        const newVehicleCategory =
+            document.getElementById("newVehicleCategory");
+
+
+        function updateVehicleMode() {
+
+            if (existingVehicleMode.checked) {
+
+                existingVehicleSection.style.display = "block";
+                newVehicleSection.style.display = "none";
+
+            }
+            else {
+
+                existingVehicleSection.style.display = "none";
+                newVehicleSection.style.display = "block";
+
+                existingVehicleSelect.value = "";
+            }
+
+            updateServicePrices();
+        }
+
+
+        function getSelectedCategoryId() {
+
+            if (existingVehicleMode.checked) {
+
+                const selectedOption =
+                    existingVehicleSelect.options[
+                    existingVehicleSelect.selectedIndex
+                    ];
+
+                if (!selectedOption) {
+                    return null;
+                }
+
+                return selectedOption.dataset.categoryId;
+            }
+
+            return newVehicleCategory.value;
+        }
+
+
+        function updateServicePrices() {
+
+            const categoryId = getSelectedCategoryId();
+
+            const servicePrices =
+                document.querySelectorAll(".service-price");
+
+            servicePrices.forEach(function (priceElement) {
+
+                const serviceId =
+                    priceElement.dataset.serviceId;
+
+                const priceData =
+                    document.querySelector(
+                        `.price-data[data-service-id="${serviceId}"][data-category-id="${categoryId}"]`
+                    );
+
+                if (priceData) {
+
+                    const price =
+                        parseFloat(priceData.dataset.price);
+
+                    priceElement.textContent =
+                        `- ${price.toFixed(2)} €`;
+
+                }
+                else {
+
+                    priceElement.textContent = "";
+                }
+            });
+
+            updateTotal();
+        }
+
+
+        function updateTotal() {
+
+            const categoryId = getSelectedCategoryId();
+
+            let total = 0;
+
+            const selectedServices =
+                document.querySelectorAll(
+                    ".service-checkbox:checked"
+                );
+
+            selectedServices.forEach(function (checkbox) {
+
+                const serviceId = checkbox.value;
+
+                const priceData =
+                    document.querySelector(
+                        `.price-data[data-service-id="${serviceId}"][data-category-id="${categoryId}"]`
+                    );
+
+                if (priceData) {
+
+                    total +=
+                        parseFloat(priceData.dataset.price);
+                }
+
+            });
+
+            document.getElementById("totalPrice")
+                .textContent = total.toFixed(2) + " €";
+        }
+
+
+        existingVehicleMode.addEventListener(
+            "change",
+            updateVehicleMode
+        );
+
+        newVehicleMode.addEventListener(
+            "change",
+            updateVehicleMode
+        );
+
+        existingVehicleSelect.addEventListener(
+            "change",
+            updateServicePrices
+        );
+
+        newVehicleCategory.addEventListener(
+            "change",
+            updateServicePrices
+        );
+
+
+        document.querySelectorAll(".service-checkbox")
+            .forEach(function (checkbox) {
+
+                checkbox.addEventListener(
+                    "change",
+                    updateTotal
+                );
+
+            });
+
+
+        const vehicleSearch =
+            document.getElementById("vehicleSearch");
+
+
+        vehicleSearch.addEventListener("input", function () {
+
+            const searchText =
+                vehicleSearch.value.toLowerCase().trim();
+
+            const options =
+                existingVehicleSelect.querySelectorAll("option");
+
+            options.forEach(function (option) {
+
+                if (option.value === "") {
+                    return;
+                }
+
+                const searchData =
+                    option.dataset.search ?? "";
+
+                if (searchData.includes(searchText)) {
+                    option.hidden = false;
+                }
+                else {
+                    option.hidden = true;
+                }
+            });
+
+        });
+
+
+        const existingCustomerMode =
+            document.getElementById("existingCustomerMode");
+
+        const newCustomerMode =
+            document.getElementById("newCustomerMode");
+
+        const existingCustomerSection =
+            document.getElementById("existingCustomerSection");
+
+        const newCustomerSection =
+            document.getElementById("newCustomerSection");
+
+        const existingCustomerSelect =
+            document.getElementById("existingCustomerSelect");
+
+        const customerSearch =
+            document.getElementById("customerSearch");
+
+        function updateCustomerMode() {
+
+            if (existingCustomerMode.checked) {
+
+                existingCustomerSection.style.display = "block";
+                newCustomerSection.style.display = "none";
+            }
+            else {
+
+                existingCustomerSection.style.display = "none";
+                newCustomerSection.style.display = "block";
+
+                existingCustomerSelect.value = "";
+            }
+        }
+
+
+        existingCustomerMode.addEventListener(
+            "change",
+            updateCustomerMode
+        );
+
+        newCustomerMode.addEventListener(
+            "change",
+            updateCustomerMode
+        );
+
+
+        customerSearch.addEventListener("input", function () {
+
+            const searchText =
+                customerSearch.value.toLowerCase().trim();
+
+            existingCustomerSelect.value = "";
+
+            const options =
+                existingCustomerSelect.querySelectorAll("option");
+
+            options.forEach(function (option) {
+
+                if (option.value === "") {
+                    return;
+                }
+
+                const searchData =
+                    option.dataset.search ?? "";
+
+                option.hidden =
+                    !searchData.includes(searchText);
+            });
+        });
+
+
+        updateVehicleMode();
+        updateCustomerMode();
+
+       
+
+    </script>
+}
