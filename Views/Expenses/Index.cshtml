@@ -1,0 +1,87 @@
+﻿@using DetailingStudio.Data.Models
+@model IEnumerable<DetailingStudio.Data.Models.Expense>
+
+@{
+    ViewData["Title"] = "Expenses";
+
+    decimal totalExpenses = Model.Sum(e => e.Amount);
+}
+
+<h1>Expenses</h1>
+
+<div class="mb-3">
+    <a asp-controller="Expenses"
+       asp-action="Create"
+       class="btn btn-primary">
+        Add Expense
+    </a>
+</div>
+
+<div class="mb-3">
+    <h4>
+        Total Expenses:
+        <strong>@totalExpenses.ToString("F2") €</strong>
+    </h4>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Notes</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (Expense expense in Model)
+        {
+            <tr>
+                <td>
+                    @expense.ExpenseDate.ToString("dd.MM.yyyy")
+                </td>
+
+                <td>
+                    @expense.Description
+                </td>
+
+                <td>
+                    @expense.ExpenseCategory.Name
+                </td>
+
+                <td>
+                    <strong>
+                        @expense.Amount.ToString("F2") €
+                    </strong>
+                </td>
+
+                <td>
+                    @expense.Notes
+                </td>
+
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@expense.Id"
+                       class="btn btn-sm btn-info">
+                        Details
+                    </a>
+
+                    <a asp-action="Edit"
+                       asp-route-id="@expense.Id"
+                       class="btn btn-sm btn-warning">
+                        Edit
+                    </a>
+
+                    <a asp-action="Delete"
+                       asp-route-id="@expense.Id"
+                       class="btn btn-sm btn-danger">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
