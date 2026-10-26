@@ -192,6 +192,7 @@ namespace DetailingStudio.Controllers
             service.Name = viewModel.Name;
             service.Description = viewModel.Description;
             service.IsActive = viewModel.IsActive;
+            service.ServiceType = viewModel.ServiceType;
 
             foreach (ServicePriceInputModel priceInput in viewModel.ServicePrices)
             {
