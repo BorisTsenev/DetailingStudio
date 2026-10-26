@@ -113,6 +113,23 @@
 </div>
 
 
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+
+        <h4 class="card-title">
+            Revenue vs Expenses
+        </h4>
+
+        <p class="text-muted">
+            Daily activity for the current month
+        </p>
+
+        <canvas id="financeChart"></canvas>
+
+    </div>
+</div>
+
+
 <div class="card shadow-sm">
 
     <div class="card-body">
@@ -194,14 +211,15 @@
 </div>
 
 
+
+
 @section Scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @if (Model.ServiceNames.Count > 0)
     {
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
         <script>
-
             const serviceNames =
                 @Html.Raw(
                 JsonSerializer.Serialize(Model.ServiceNames)
@@ -212,17 +230,13 @@
                 JsonSerializer.Serialize(Model.ServiceCounts)
                 );
 
-
-            const ctx =
+            const servicesChart =
                 document.getElementById("servicesChart");
 
-
-            new Chart(ctx, {
-
+            new Chart(servicesChart, {
                 type: "pie",
 
                 data: {
-
                     labels: serviceNames,
 
                     datasets: [
@@ -233,19 +247,111 @@
                 },
 
                 options: {
-
                     responsive: true,
 
                     plugins: {
-
                         legend: {
                             position: "bottom"
                         }
                     }
                 }
-
             });
-
         </script>
     }
+
+
+    <script>
+        const days =
+            @Html.Raw(
+            JsonSerializer.Serialize(Model.Days)
+            );
+
+        const dailyRevenue =
+            @Html.Raw(
+            JsonSerializer.Serialize(Model.DailyRevenue)
+            );
+
+        const dailyExpenses =
+            @Html.Raw(
+            JsonSerializer.Serialize(Model.DailyExpenses)
+            );
+
+
+        const financeChart =
+            document.getElementById("financeChart");
+
+
+        new Chart(financeChart, {
+
+            type: "line",
+
+            data: {
+
+                labels: days,
+
+                datasets: [
+                    {
+                        label: "Revenue",
+                        data: dailyRevenue,
+                        tension: 0.3
+                    },
+                    {
+                        label: "Expenses",
+                        data: dailyExpenses,
+                        tension: 0.3
+                    }
+                ]
+            },
+
+            options: {
+
+                responsive: true,
+
+                interaction: {
+                    mode: "index",
+                    intersect: false
+                },
+
+                scales: {
+
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Day of Month"
+                        }
+                    },
+
+                    y: {
+                        beginAtZero: true,
+
+                        title: {
+                            display: true,
+                            text: "Amount (€)"
+                        }
+                    }
+                },
+
+                plugins: {
+
+                    legend: {
+                        position: "bottom"
+                    },
+
+                    tooltip: {
+                        callbacks: {
+
+                            label: function (context) {
+
+                                return context.dataset.label +
+                                    ": " +
+                                    context.parsed.y.toFixed(2) +
+                                    " €";
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+    </script>
 }

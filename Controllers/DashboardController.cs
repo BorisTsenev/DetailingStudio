@@ -35,7 +35,11 @@ namespace DetailingStudio.Controllers
                     .Include(o => o.DetailingOrderServices)
                         .ThenInclude(os => os.Service)
                     .ToListAsync();
-
+            List<Expense> expensesThisMonth = await context.Expenses
+                    .Where(e =>
+                        e.ExpenseDate >= startOfMonth &&
+                        e.ExpenseDate < startOfNextMonth)
+                    .ToListAsync();
 
             DashboardViewModel viewModel =
                 new DashboardViewModel();
@@ -54,6 +58,13 @@ namespace DetailingStudio.Controllers
                 completedOrders
                     .Sum(o => o.DetailingOrderServices
                         .Sum(os => os.Price));
+
+            viewModel.ExpensesThisMonth =
+                expensesThisMonth.Sum(e => e.Amount);
+
+            viewModel.ProfitThisMonth =
+                viewModel.RevenueThisMonth -
+                viewModel.ExpensesThisMonth;
 
 
             viewModel.TotalCustomers =
@@ -93,6 +104,30 @@ namespace DetailingStudio.Controllers
                     .OrderByDescending(o => o.CreatedOn)
                     .Take(5)
                     .ToListAsync();
+
+            int daysInMonth = DateTime.DaysInMonth(now.Year, now.Month);
+
+
+            for (int day = 1; day <= daysInMonth; day++)
+            {
+                DateTime currentDay =
+                    new DateTime(now.Year, now.Month, day);
+
+                decimal revenue = completedOrders
+                    .Where(o => o.AppointmentDate.Date == currentDay.Date)
+                    .Sum(o => o.DetailingOrderServices
+                        .Sum(os => os.Price));
+
+                decimal expenses = expensesThisMonth
+                    .Where(e => e.ExpenseDate.Date == currentDay.Date)
+                    .Sum(e => e.Amount);
+
+                viewModel.Days.Add(day.ToString());
+
+                viewModel.DailyRevenue.Add(revenue);
+
+                viewModel.DailyExpenses.Add(expenses);
+            }
 
 
             return View(viewModel);

@@ -12,6 +12,10 @@ namespace DetailingStudio.Models.ViewModels
 
         public int TotalCustomers { get; set; }
 
+        public decimal ExpensesThisMonth { get; set; }
+
+        public decimal ProfitThisMonth { get; set; }
+
         public List<string> ServiceNames { get; set; }
             = new List<string>();
 
@@ -20,5 +24,15 @@ namespace DetailingStudio.Models.ViewModels
 
         public List<DetailingOrder> RecentOrders { get; set; }
             = new List<DetailingOrder>();
+
+
+        public List<string> Days { get; set; }
+            = new List<string>();
+
+        public List<decimal> DailyRevenue { get; set; }
+            = new List<decimal>();
+
+        public List<decimal> DailyExpenses { get; set; }
+            = new List<decimal>();
     }
 }
