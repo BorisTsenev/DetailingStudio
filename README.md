@@ -163,17 +163,6 @@ The expense data is used together with completed orders to calculate revenue, ex
 
 ---
 
-### Authentication
-
-ASP.NET Core Identity is included in the application.
-
-Users can:
-
-* Register
-* Log in
-* Log out
-
----
 
 ### Light and Dark Mode
 
@@ -395,13 +384,12 @@ After starting the application on a new environment, verify the following:
 2. The database is created successfully.
 3. Vehicle categories are available.
 4. Expense categories are available.
-5. A user can register and log in.
-6. Customers can be created.
-7. Vehicles can be created.
-8. Services and category-specific prices can be created.
-9. Orders can be created.
-10. Expenses can be created.
-11. Dashboard statistics and charts are displayed.
+5. Customers can be created.
+6. Vehicles can be created.
+7. Services and category-specific prices can be created.
+8. Orders can be created.
+9. Expenses can be created.
+10. Dashboard statistics and charts are displayed.
 
 ---
 
